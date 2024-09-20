@@ -4,6 +4,7 @@
  */
 package MyApp;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -19,6 +20,10 @@ public class StarLinkMainFrame extends JFrame {
 
     // variables for the inputPanel
     JPanel inputPanel;
+    JPanel satIDPanel;
+    JPanel satNamePanel;
+    JPanel longLatPanel;
+    JPanel elevStatPanel;
 
     // variables for the save/update/delete buttons panel
     JPanel buttonPanel;
@@ -34,55 +39,96 @@ public class StarLinkMainFrame extends JFrame {
     JTextArea textArea;
     JButton clearAllBtn;
 
-    public StarLinkMainFrame() {
-        mainFrame = new JFrame("SpaceX Starlink Project");
-        mainFrame.setSize(700, 400);
-        mainFrame.setVisible(true);
-        
-        mainFrame.setLayout(new GridLayout(3, 1));
-        
-        
-        // initialize the panel rows
-        inputPanel = new JPanel();
-        buttonPanel = new JPanel();
-        textPanel = new JPanel();
-        
-        // input panel
-        
 
-        // button panel
-        // set the layout manager
-        buttonPanel.setLayout(new FlowLayout());
+    // variables for the clearAll panel
+    JPanel clearAllPanel;
+
+
+    public StarLinkMainFrame() {
+        setTitle("SpaceX Starlink Project");
+        setSize(600, 400);
+        setLayout(new GridLayout(4, 1));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+        // Initializing the panels
+        JPanel inputPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel textPanel = new JPanel(new BorderLayout());
+        JPanel clearAllPanel = new JPanel(new FlowLayout());
+
+        // Input panel setup
+        // Satellite ID Panel
+        JPanel satIDPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 22, 10)); // 10 pixels horizontal and vertical gap
+        satIDPanel.add(new JLabel("Satellite ID"));
+        satIDPanel.add(new JTextField(15));
+        JButton findSatBtn = new JButton("Find Satellite");
+        findSatBtn.setPreferredSize(new Dimension(250, 30));
+        
+        satIDPanel.add(findSatBtn);
+        inputPanel.add(satIDPanel);
+        
+        // Satellite Name Panel
+        JPanel satNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        satNamePanel.add(new JLabel("Satellite Name"));
+        satNamePanel.add(new JTextField(40));
+        inputPanel.add(satNamePanel);
+
+        // Longitude and Latitude Panel
+        JPanel longLatPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 24, 10));
+        longLatPanel.add(new JLabel("Longitude"));
+        longLatPanel.add(new JTextField(15));
+
+        JPanel latPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 24, 0));
+        latPanel.add(new JLabel("Latitde"));
+        latPanel.add(new JTextField(15));
+        longLatPanel.add(latPanel);
+        inputPanel.add(longLatPanel);
+
+        // Elevation and Health Status Panel
+        JPanel elevStatPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 25, 10));
+        elevStatPanel.add(new JLabel("Elevation"));
+        elevStatPanel.add(new JTextField(15));
+        
+        elevStatPanel.add(new JLabel("Health Status"));
+        elevStatPanel.add(new JComboBox<>());
+        inputPanel.add(elevStatPanel);
+
 
         saveBtn = new JButton("Save");
-        updateBtn = new JButton("Update");
-        deleteBtn = new JButton("Delete");
+        saveBtn.setPreferredSize(new Dimension(175, 30));  // Set the width to 100 and height to 30
 
+        updateBtn = new JButton("Update");
+        updateBtn.setPreferredSize(new Dimension(175, 30));
+
+        deleteBtn = new JButton("Delete");
+        deleteBtn.setPreferredSize(new Dimension(175, 30));
+
+        // Add buttons to the button panel
         buttonPanel.add(saveBtn);
         buttonPanel.add(updateBtn);
         buttonPanel.add(deleteBtn);
-        // text panel
-        // set the layout manager
-        textPanel.setLayout(new GridLayout(2, 1));
+
+        // Text panel setup
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
+        textPanel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+
+        // Clear All panel setup
+        JButton clearAllBtn = new JButton("Clear All");
+        clearAllBtn.setPreferredSize(new Dimension(175, 30));
+        clearAllPanel.add(clearAllBtn);
         
-        textArea = new JTextArea(10, 10);
-        clearAllBtn = new JButton("Clear All");
-
         
-        textPanel.add(textArea); 
-        textPanel.add(clearAllBtn);
 
-        // adding the panels to the main frame
-        mainFrame.add(inputPanel);
-        mainFrame.add(buttonPanel);
-        mainFrame.add(textPanel);
+        // Adding panels to the main frame
+        add(inputPanel);
+        add(buttonPanel);
+        add(textPanel);
+        add(clearAllPanel);
 
-        mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
-        inputPanel.setVisible(true);
-        buttonPanel.setVisible(true);
-        textPanel.setVisible(true);
+        // Make the frame visible after all components are added
+        setVisible(true);
     }
 
 
