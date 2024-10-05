@@ -4,6 +4,14 @@
  * and open the template in the editor.
  */
 package MyApp;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,8 +22,18 @@ public class FuzzySearcher extends javax.swing.JFrame {
     /**
      * Creates new form FuzzySearcher
      */
+
+    private HashSet<String> filters = new HashSet<>();
+    
+    
+
     public FuzzySearcher() {
         initComponents();
+        registerKeyBindings();
+        ImageIcon icon = new ImageIcon("src/MyApp/fuzzyFinderIcon.png");
+        setIconImage(icon.getImage());
+        setResizable(false);
+        currSrchDir.setText(".");
     }
 
     /**
@@ -27,70 +45,145 @@ public class FuzzySearcher extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dirChooser = new javax.swing.JFileChooser();
+        fileContextMenu = new javax.swing.JPopupMenu();
+        openFile = new javax.swing.JMenuItem();
+        openFileLoc = new javax.swing.JMenuItem();
+        mainPanel = new javax.swing.JPanel();
         SearchPanel = new javax.swing.JPanel();
         fuzzySearchField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        searchButton = new javax.swing.JButton();
+        currSrchDirLabel = new javax.swing.JLabel();
+        currSrchDir = new javax.swing.JLabel();
+        fileScrollPanel = new javax.swing.JScrollPane();
+        filesTable = new javax.swing.JTable();
+        optionsPanel = new javax.swing.JPanel();
+        srchDirPanel = new javax.swing.JPanel();
+        changeSrchDirLabel = new javax.swing.JLabel();
+        changeSrchDirButton = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        fileTypePanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        allCheckBox = new javax.swing.JCheckBox();
         imgCheckBox = new javax.swing.JCheckBox();
         docCheckBox = new javax.swing.JCheckBox();
         vidCheckBox = new javax.swing.JCheckBox();
+        dirCheckBox = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+
+        dirChooser.setAccessory(changeSrchDirButton);
+
+        openFile.setText("jMenuItem1");
+        fileContextMenu.add(openFile);
+
+        openFileLoc.setText("jMenuItem2");
+        fileContextMenu.add(openFileLoc);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Fuzzy Finder");
+        setName("mainFrame"); // NOI18N
 
-        fuzzySearchField.setText("Search Files");
+        mainPanel.setBackground(new java.awt.Color(40, 42, 54));
+        mainPanel.setForeground(new java.awt.Color(248, 248, 242));
+
+        SearchPanel.setBackground(new java.awt.Color(40, 42, 54));
+        SearchPanel.setForeground(new java.awt.Color(248, 248, 242));
+
+        fuzzySearchField.setBackground(new java.awt.Color(40, 42, 54));
+        fuzzySearchField.setForeground(new java.awt.Color(248, 248, 242));
         fuzzySearchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fuzzySearchFieldActionPerformed(evt);
             }
         });
+        fuzzySearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fuzzySearchFieldKeyPressed(evt);
+            }
+        });
 
-        jButton1.setText("jButton1");
+        searchButton.setBackground(new java.awt.Color(40, 42, 54));
+        searchButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(80, 250, 123));
+        searchButton.setText("Search");
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
+        searchButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchButtonKeyPressed(evt);
+            }
+        });
 
-        jLabel2.setText("Current Search Directory:");
+        currSrchDirLabel.setForeground(new java.awt.Color(248, 248, 242));
+        currSrchDirLabel.setText("Current Search Directory:");
 
-        jLabel3.setText("jLabel3");
+        currSrchDir.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        currSrchDir.setForeground(new java.awt.Color(248, 248, 242));
 
         javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
         SearchPanel.setLayout(SearchPanelLayout);
         SearchPanelLayout.setHorizontalGroup(
             SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(22, 22, 22)
+                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(SearchPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(currSrchDirLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(fuzzySearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(currSrchDir, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(SearchPanelLayout.createSequentialGroup()
+                        .addComponent(fuzzySearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104))))
         );
         SearchPanelLayout.setVerticalGroup(
             SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchPanelLayout.createSequentialGroup()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(currSrchDirLabel)
+                    .addComponent(currSrchDir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fuzzySearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(searchButton))
                 .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        fileScrollPanel.setBackground(new java.awt.Color(40, 42, 54));
+        fileScrollPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fileScrollPanel.setForeground(new java.awt.Color(40, 42, 54));
+        fileScrollPanel.setToolTipText("");
+        fileScrollPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        fileScrollPanel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        filesTable.setBackground(new java.awt.Color(40, 42, 54));
+        filesTable.setForeground(new java.awt.Color(248, 248, 242));
+        filesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -129,121 +222,215 @@ public class FuzzySearcher extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        filesTable.setGridColor(new java.awt.Color(255, 255, 255));
+        filesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                filesTableMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                filesTableMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                filesTableMousePressed(evt);
+            }
+        });
+        fileScrollPanel.setViewportView(filesTable);
 
-        jPanel1.setLayout(new java.awt.GridLayout(3, 0));
+        optionsPanel.setBackground(new java.awt.Color(40, 42, 54));
+        optionsPanel.setForeground(new java.awt.Color(248, 248, 242));
+        optionsPanel.setLayout(new java.awt.GridLayout(3, 0));
 
-        jLabel1.setText("Search Directory:");
+        srchDirPanel.setBackground(new java.awt.Color(40, 42, 54));
+        srchDirPanel.setForeground(new java.awt.Color(248, 248, 242));
 
-        jButton2.setText("Change Search Directory");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        changeSrchDirLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        changeSrchDirLabel.setForeground(new java.awt.Color(139, 233, 253));
+        changeSrchDirLabel.setText("Search Directory:");
+
+        changeSrchDirButton.setBackground(new java.awt.Color(40, 42, 54));
+        changeSrchDirButton.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        changeSrchDirButton.setForeground(new java.awt.Color(189, 147, 249));
+        changeSrchDirButton.setText("Change Search Directory");
+        changeSrchDirButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                changeSrchDirButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jLabel8.setText("File Type");
+
+        jLabel9.setFont(new java.awt.Font("Broadway", 0, 36)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 184, 108));
+        jLabel9.setText("Fuzzy Finder");
+
+        javax.swing.GroupLayout srchDirPanelLayout = new javax.swing.GroupLayout(srchDirPanel);
+        srchDirPanel.setLayout(srchDirPanelLayout);
+        srchDirPanelLayout.setHorizontalGroup(
+            srchDirPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(srchDirPanelLayout.createSequentialGroup()
+                .addGroup(srchDirPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(srchDirPanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel9))
+                    .addGroup(srchDirPanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(changeSrchDirLabel))
+                    .addGroup(srchDirPanelLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(changeSrchDirButton)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        srchDirPanelLayout.setVerticalGroup(
+            srchDirPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(srchDirPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(changeSrchDirLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addComponent(changeSrchDirButton)
+                .addGap(48, 48, 48))
         );
 
-        jPanel1.add(jPanel2);
+        optionsPanel.add(srchDirPanel);
 
+        fileTypePanel.setBackground(new java.awt.Color(40, 42, 54));
+        fileTypePanel.setForeground(new java.awt.Color(248, 248, 242));
+        fileTypePanel.setLayout(new java.awt.GridLayout(7, 0));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(139, 233, 253));
         jLabel4.setText("File Type");
+        fileTypePanel.add(jLabel4);
 
+        allCheckBox.setBackground(new java.awt.Color(40, 42, 54));
+        allCheckBox.setForeground(new java.awt.Color(248, 248, 242));
+        allCheckBox.setSelected(true);
+        allCheckBox.setText("All");
+        allCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                allCheckBoxItemStateChanged(evt);
+            }
+        });
+        allCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allCheckBoxActionPerformed(evt);
+            }
+        });
+        fileTypePanel.add(allCheckBox);
+
+        imgCheckBox.setBackground(new java.awt.Color(40, 42, 54));
+        imgCheckBox.setForeground(new java.awt.Color(248, 248, 242));
         imgCheckBox.setText("Images");
+        imgCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                allCheckBoxItemStateChanged(evt);
+            }
+        });
+        fileTypePanel.add(imgCheckBox);
 
+        docCheckBox.setBackground(new java.awt.Color(40, 42, 54));
+        docCheckBox.setForeground(new java.awt.Color(248, 248, 242));
         docCheckBox.setText("Documents");
+        docCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                allCheckBoxItemStateChanged(evt);
+            }
+        });
+        fileTypePanel.add(docCheckBox);
 
+        vidCheckBox.setBackground(new java.awt.Color(40, 42, 54));
+        vidCheckBox.setForeground(new java.awt.Color(248, 248, 242));
         vidCheckBox.setText("Videos");
+        vidCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                allCheckBoxItemStateChanged(evt);
+            }
+        });
+        fileTypePanel.add(vidCheckBox);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        dirCheckBox.setBackground(new java.awt.Color(40, 42, 54));
+        dirCheckBox.setForeground(new java.awt.Color(248, 248, 242));
+        dirCheckBox.setText("Directories");
+        dirCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                allCheckBoxItemStateChanged(evt);
+            }
+        });
+        fileTypePanel.add(dirCheckBox);
+
+        optionsPanel.add(fileTypePanel);
+
+        jPanel4.setBackground(new java.awt.Color(40, 42, 54));
+        jPanel4.setLayout(new java.awt.GridLayout(6, 0));
+
+        jLabel1.setBackground(new java.awt.Color(40, 42, 54));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(139, 233, 253));
+        jLabel1.setText("Shortcuts");
+        jPanel4.add(jLabel1);
+
+        jLabel2.setForeground(new java.awt.Color(248, 248, 242));
+        jLabel2.setText("Search: Enter");
+        jPanel4.add(jLabel2);
+
+        jLabel3.setForeground(new java.awt.Color(248, 248, 242));
+        jLabel3.setText("Focus Search Field: Ctrl + F");
+        jPanel4.add(jLabel3);
+
+        jLabel5.setForeground(new java.awt.Color(248, 248, 242));
+        jLabel5.setText("Change Directory: Ctrl + D");
+        jPanel4.add(jLabel5);
+
+        jLabel6.setForeground(new java.awt.Color(248, 248, 242));
+        jLabel6.setText("Open File: Double Click");
+        jPanel4.add(jLabel6);
+
+        jLabel7.setForeground(new java.awt.Color(248, 248, 242));
+        jLabel7.setText("File Location: RClick + Open Location");
+        jPanel4.add(jLabel7);
+
+        optionsPanel.add(jPanel4);
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(SearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(fileScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(optionsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vidCheckBox)
-                    .addComponent(docCheckBox)
-                    .addComponent(imgCheckBox)
-                    .addComponent(jLabel4))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addComponent(SearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fileScrollPanel)
+                    .addComponent(optionsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(imgCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(docCheckBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vidCheckBox)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel3);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 199, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 151, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel4);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(SearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(SearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -253,9 +440,230 @@ public class FuzzySearcher extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fuzzySearchFieldActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void changeSrchDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeSrchDirButtonActionPerformed
+        // we open the directory chooser
+        dirChooser = new JFileChooser();
+        dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = dirChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // we get the selected directory
+            File selectedDir = dirChooser.getSelectedFile();
+            // we set the current search directory
+            currSrchDir.setText(selectedDir.getAbsolutePath());
+        }
+    }//GEN-LAST:event_changeSrchDirButtonActionPerformed
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // we get the search term from the search field
+        String searchTerm = fuzzySearchField.getText().toLowerCase();
+        
+        // we check if the search term is empty
+        if (searchTerm.isEmpty()) {
+            // if the search term is empty we show an error message
+            JOptionPane.showMessageDialog(null, "Please enter a search term.");
+            return;
+        }
+
+        // get the current search directory text and check whether it exists
+        File searchDir = new File(currSrchDir.getText());
+        if (!searchDir.exists()) {
+            JOptionPane.showMessageDialog(null, "The directory does not exist.");
+            return;
+        }
+
+        ArrayList<File> files = new ArrayList<>();
+        recursiveSearch(searchDir, files, searchTerm);
+
+        updateTable(files);
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void recursiveSearch(File searchDir, ArrayList<File> files, String searchTerm) {
+        if (searchDir.isDirectory()) {
+            File[] filesInDir = searchDir.listFiles();
+            for (File file : filesInDir) {
+
+                try {
+                    if (file.isDirectory()) {
+                        if ((dirCheckBox.isSelected() || allCheckBox.isSelected()) && file.getName().toLowerCase().contains(searchTerm)) {
+                            files.add(file);
+                        }
+                    recursiveSearch(file, files, searchTerm);
+                } else if (file.isFile() && !dirCheckBox.isSelected()) {
+                    String extension = getFileExtension(file);
+                    System.out.println(extension);
+                    if (file.getName().toLowerCase().contains(searchTerm) && (filters.contains(extension) || filters.isEmpty())) {
+                        files.add(file);
+                    }
+                }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    continue;
+                } 
+            }
+        }
+    }
+
+    private void updateTable(ArrayList<File> files) {
+        DefaultTableModel model = (DefaultTableModel) filesTable.getModel();
+        model.setRowCount(0);
+        for (File file : files) {
+            model.addRow(new Object[]{file.getName(), file.getAbsolutePath(), getFileExtension(file)});
+        }
+    }
+
+    private String getFileExtension(File file) {
+        String extension = "";
+
+        String name = file.getName();
+        int extensionIndex = name.lastIndexOf(".");
+        if (extensionIndex > 0) {
+            extension = name.substring(extensionIndex+1);
+        }
+
+        return extension.toLowerCase();
+    }
+ 
+    private void searchButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchButtonKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_searchButtonKeyPressed
+
+    private void allCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_allCheckBoxItemStateChanged
+        
+        filters.clear();
+        if (evt.getSource() == allCheckBox) {
+            if (allCheckBox.isSelected()) {
+                imgCheckBox.setSelected(false);
+                docCheckBox.setSelected(false);
+                vidCheckBox.setSelected(false);
+                dirCheckBox.setSelected(false);
+            }
+        }
+
+        if (imgCheckBox.isSelected()) {
+            filters.addAll(Arrays.asList("jpeg", "jpg", "png", "gif", "bmp", "tiff", "svg", "webp", "ico"));
+        }
+
+        if (docCheckBox.isSelected()) {
+            filters.addAll(Arrays.asList("pdf", "doc", "docx", "odt", "txt", "rtf", "wps", "wrd", "docm", "dotx", "dotm"));
+        }
+
+        if (vidCheckBox.isSelected()) {
+            filters.addAll(Arrays.asList("mp4", "mkv", "avi", "mov", "3gp", "mpg", "mpeg", "wmv", "flv", "webm"));
+        }
+        
+        if (dirCheckBox.isSelected()) {
+            allCheckBox.setSelected(false);
+        }
+
+
+        if (filters.isEmpty() && !dirCheckBox.isSelected()) {
+            allCheckBox.setSelected(true);
+        } else {
+            allCheckBox.setSelected(false);
+        }
+
+        if (!fuzzySearchField.getText().isEmpty()) {
+            searchButton.doClick();
+        }
+
+    }//GEN-LAST:event_allCheckBoxItemStateChanged
+
+    private void filesTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filesTableMousePressed
+        if (evt.isPopupTrigger()) {
+            int row = filesTable.rowAtPoint(evt.getPoint());
+            filesTable.setRowSelectionInterval(row, row);
+
+            // get file from table row
+            File file = new File(filesTable.getValueAt(row, 1).toString());
+            fileContextMenu = createMenu(file);
+            fileContextMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_filesTableMousePressed
+
+    private void filesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_filesTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            int row = filesTable.rowAtPoint(evt.getPoint());
+            filesTable.setRowSelectionInterval(row, row);
+            File file = new File(filesTable.getValueAt(row, 1).toString());
+            openFile(file);
+        }
+    }//GEN-LAST:event_filesTableMouseClicked
+
+
+    private void registerKeyBindings() {
+        InputMap inputMap = fuzzySearchField.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = fuzzySearchField.getActionMap();
+
+        // Ctrl + F to focus the search field
+        inputMap.put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.KeyEvent.CTRL_DOWN_MASK), "focusfuzzySearchField");
+        actionMap.put("focusfuzzySearchField", new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                fuzzySearchField.requestFocusInWindow(); // Focuses search field
+            }
+        });
+
+        // Enter key to trigger the search
+        inputMap.put(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.KeyEvent.CTRL_DOWN_MASK), "changeDir");
+        actionMap.put("changeDir", new AbstractAction() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                changeSrchDirButton.doClick(); // Simulates a search button click
+            }
+        });
+    }
+
+    
+
+    private void fuzzySearchFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fuzzySearchFieldKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_F && evt.isControlDown()) {
+            fuzzySearchField.requestFocusInWindow();
+        }
+
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            searchButton.doClick();
+        }
+    }//GEN-LAST:event_fuzzySearchFieldKeyPressed
+
+    private void allCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_allCheckBoxActionPerformed
+
+    private JPopupMenu createMenu(File file) {
+        fileContextMenu = new JPopupMenu();
+        openFile = new JMenuItem("Open File");
+        openFile.addActionListener(e -> openFile(file));
+        openFileLoc = new JMenuItem("Open Location");
+        openFileLoc.addActionListener(e -> openFileLoc(file));
+        fileContextMenu.add(openFile);
+        fileContextMenu.add(openFileLoc);
+
+        return fileContextMenu;
+    }
+
+    private void openFileLoc(File file) {
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file.getParentFile());  // Open the parent folder
+            } else {
+                System.out.println("Desktop is not supported.");
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void openFile(File file) {
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);  // Open the file
+            } else {
+                System.out.println("Desktop is not supported.");
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -294,21 +702,36 @@ public class FuzzySearcher extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel SearchPanel;
+    private javax.swing.JCheckBox allCheckBox;
+    private javax.swing.JButton changeSrchDirButton;
+    private javax.swing.JLabel changeSrchDirLabel;
+    private javax.swing.JLabel currSrchDir;
+    private javax.swing.JLabel currSrchDirLabel;
+    private javax.swing.JCheckBox dirCheckBox;
+    private javax.swing.JFileChooser dirChooser;
     private javax.swing.JCheckBox docCheckBox;
+    private javax.swing.JPopupMenu fileContextMenu;
+    private javax.swing.JScrollPane fileScrollPanel;
+    private javax.swing.JPanel fileTypePanel;
+    private javax.swing.JTable filesTable;
     private javax.swing.JTextField fuzzySearchField;
     private javax.swing.JCheckBox imgCheckBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JMenuItem openFile;
+    private javax.swing.JMenuItem openFileLoc;
+    private javax.swing.JPanel optionsPanel;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JPanel srchDirPanel;
     private javax.swing.JCheckBox vidCheckBox;
     // End of variables declaration//GEN-END:variables
 }
